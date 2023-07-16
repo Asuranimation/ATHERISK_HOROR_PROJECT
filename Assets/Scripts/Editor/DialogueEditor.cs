@@ -38,17 +38,16 @@ namespace DialogueSystem.Editor
             {
                 foreach (DialogNode node in selectedDialogue.GetAllNodes())
                 {
-                    /* jadikan new dialog ini ref dari EditorGUILayout.TextField(node.text); berarti nilai string mereka sama
-                     disini jika ada perubahan text maka jelas newDialogue tidak sama dengan node.text , jadi yg ada perubahan 
-                     string aja yg di simpan dalam setDirty, kalo ga gini ya semua disimpan dalam set dirty meski itu perubahan
-                     yg tidak diperlukan, beginilah cara atasinya */
+                    EditorGUILayout.LabelField("Node");
+                    EditorGUI.BeginChangeCheck();
+                    string newUniqueId = EditorGUILayout.TextField(node.uniqueID);
                     string newDialogue = EditorGUILayout.TextField(node.text);
-                    if (newDialogue != node.text)
+                    if (EditorGUI.EndChangeCheck())
                     {
+                        Undo.RecordObject(selectedDialogue,"Update Dialogue Text");
+                        node.uniqueID = newUniqueId;
                         node.text = newDialogue;
-                        EditorUtility.SetDirty(selectedDialogue);
                     }
-                    
 
                 }
             }
