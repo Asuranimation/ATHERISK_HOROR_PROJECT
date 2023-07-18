@@ -10,7 +10,7 @@ namespace DialogueSystem
         public string uniqueID;
         public string text;
         public string[] children;
-
+        public Rect positionNode = new Rect(0,0,300,160);
     }
     
 }
